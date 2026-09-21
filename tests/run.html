@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>masking-tool-ai テスト</title>
+    <style>
+      body {
+        font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+        margin: 24px;
+        line-height: 1.5;
+      }
+      .pass {
+        color: #0b6b2e;
+      }
+      .fail {
+        color: #a40000;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>動作確認テスト</h1>
+    <p id="summary"></p>
+    <ul id="results"></ul>
+
+    <script src="../js/phone.js"></script>
+    <script src="../js/copy.js"></script>
+    <script src="../js/render.js"></script>
+    <script src="phone.test.js"></script>
+    <script>
+      (function () {
+        const results = runPhoneTests();
+        const list = document.getElementById("results");
+        const failed = results.filter(function (item) {
+          return !item.pass;
+        });
+
+        results.forEach(function (item) {
+          const li = document.createElement("li");
+          li.className = item.pass ? "pass" : "fail";
+          li.textContent = (item.pass ? "PASS: " : "FAIL: ") + item.name;
+          if (!item.pass) {
+            li.textContent +=
+              " / expected=" +
+              JSON.stringify(item.expected) +
+              " actual=" +
+              JSON.stringify(item.actual);
+          }
+          list.appendChild(li);
+        });
+
+        const summary = document.getElementById("summary");
+        summary.textContent =
+          results.length -
+          failed.length +
+          " / " +
+          results.length +
+          " 件成功" +
+          (failed.length ? "（失敗あり）" : "");
+        summary.className = failed.length ? "fail" : "pass";
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,151 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #222;
+  background: #f7f7f7;
+}
+
+header,
+main,
+footer {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0 0 0.5em;
+  font-size: 1.5rem;
+}
+
+.notice-box {
+  margin: 1.5em 0;
+  padding: 1em 1.2em;
+  background-color: transparent;
+  border: 1px dashed #999;
+  border-radius: 4px;
+  color: #444;
+}
+
+.notice-text {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.box {
+  flex: 1;
+  min-width: 280px;
+  background: #e0e0e0;
+  padding: 20px;
+  border: 1px solid #999;
+}
+
+.box label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+#textInput,
+#textOutput {
+  width: 100%;
+  min-height: 150px;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid #999;
+  background: #fff;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+#textInput {
+  resize: vertical;
+}
+
+#textOutput {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.status-message {
+  margin: 12px 0 0;
+  color: #0b6b2e;
+}
+
+.status-message.is-error {
+  color: #a40000;
+}
+
+.hint {
+  margin: 12px 0 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.highlight.disabled {
+  background-color: #ccc;
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+footer {
+  margin-top: 32px;
+  color: #555;
+  font-size: 0.9em;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .box {
+    min-width: 0;
+    width: 100%;
+    padding: 12px;
+  }
+
+  button {
+    width: 100%;
+  }
+}

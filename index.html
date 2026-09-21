@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>マスキングツール</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>マスキングツール</h1>
+    </header>
+
+    <main>
+      <p>マスキングツールは、テキストをマスクするためのツールです。</p>
+
+      <div class="notice-box">
+        <p class="notice-text">
+          <strong>🔒：</strong>こちらで入力・出力したテキストは、外部送信されませんし、保存もされません。
+        </p>
+      </div>
+
+      <div class="container">
+        <div class="box">
+          <label for="textInput">入力欄</label>
+          <textarea
+            id="textInput"
+            placeholder="ここに文章を入力してください。"
+          ></textarea>
+        </div>
+
+        <div class="box">
+          <label id="textOutputLabel">出力欄</label>
+          <div
+            id="textOutput"
+            role="region"
+            aria-labelledby="textOutputLabel"
+          ></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="detectButton">
+          電話番号を検出してハイライト
+        </button>
+        <button type="button" id="copyButton">
+          結果をコピー（ONは [MASK]）
+        </button>
+      </div>
+      <p id="statusMessage" class="status-message" hidden></p>
+      <p class="hint">
+        ハイライトをクリックするとマスク対象から外せます。コピー時に、ONの番号は
+        [MASK] へ置換し、OFFの番号は元のまま残します。
+      </p>
+    </main>
+
+    <footer>
+      <p>© 2026 Masking Tool. All rights reserved.</p>
+    </footer>
+
+    <script src="js/phone.js"></script>
+    <script src="js/copy.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
