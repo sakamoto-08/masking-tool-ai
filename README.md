@@ -2,6 +2,10 @@
 
 自力で実装した [masking-tool](https://github.com/sakamoto-08/masking-tool) を題材に、Cursor へ要件を渡して品質を上げた練習用プロジェクトです。機能は元アプリと同じで、増やしていません。
 
+## デモ
+
+https://sakamoto-08.github.io/masking-tool-ai/
+
 ## このリポジトリについて
 
 このリポジトリは、電話番号マスキングツール [masking-tool](https://github.com/sakamoto-08/masking-tool) の品質向上版です。元アプリは自分で実装し、こちらでは AI エージェント（Cursor）に指示を出しながら、同じ機能を安全で見通しのよい形に組み直しました。
