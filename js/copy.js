@@ -15,7 +15,8 @@ function buildMaskedText(tokens) {
     if (!token || typeof token.value !== "string") {
       continue;
     }
-    if (token.type === "phone" && !token.disabled) {
+    // メールも電話番号と同じルール: ON なら [MASK]、OFF なら元の文字列。
+    if (isMaskableToken(token) && !token.disabled) {
       result += MASK_REPLACEMENT;
     } else {
       result += token.value;
@@ -38,7 +39,7 @@ function tokensFromOutputElement(container) {
       node.classList.contains("highlight")
     ) {
       tokens.push({
-        type: "phone",
+        type: node.getAttribute("data-type") === "email" ? "email" : "phone",
         value: node.textContent,
         disabled: node.classList.contains("disabled"),
       });

@@ -12,9 +12,11 @@ function renderHighlighted(text, container) {
   const fragment = document.createDocumentFragment();
 
   for (const token of tokens) {
-    if (token.type === "phone") {
+    // 電話番号と同じ highlight でメールも描画する。data-type はコピー時の復元用。
+    if (isMaskableToken(token)) {
       const span = document.createElement("span");
       span.className = "highlight";
+      span.setAttribute("data-type", token.type);
       span.textContent = token.value;
       fragment.appendChild(span);
     } else {

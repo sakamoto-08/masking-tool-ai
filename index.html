@@ -41,7 +41,7 @@
 
       <div class="actions">
         <button type="button" id="detectButton">
-          電話番号を検出してハイライト
+          電話番号・メールを検出してハイライト
         </button>
         <button type="button" id="copyButton">
           結果をコピー（ONは [MASK]）
@@ -49,8 +49,8 @@
       </div>
       <p id="statusMessage" class="status-message" hidden></p>
       <p class="hint">
-        ハイライトをクリックするとマスク対象から外せます。コピー時に、ONの番号は
-        [MASK] へ置換し、OFFの番号は元のまま残します。
+        ハイライトをクリックするとマスク対象から外せます。コピー時に、ONの対象は
+        [MASK] へ置換し、OFFの対象は元のまま残します。
       </p>
     </main>
 
@@ -58,6 +58,7 @@
       <p>© 2026 Masking Tool. All rights reserved.</p>
     </footer>
 
+    <script src="js/email.js"></script>
     <script src="js/phone.js"></script>
     <script src="js/copy.js"></script>
     <script src="js/render.js"></script>
