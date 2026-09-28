@@ -27,14 +27,16 @@
     <ul id="results"></ul>
 
     <script src="../js/email.js"></script>
+    <script src="../js/address.js"></script>
     <script src="../js/phone.js"></script>
     <script src="../js/copy.js"></script>
     <script src="../js/render.js"></script>
     <script src="phone.test.js"></script>
     <script src="email.test.js"></script>
+    <script src="address.test.js"></script>
     <script>
       (function () {
-        const results = runPhoneTests().concat(runEmailTests());
+        const results = runPhoneTests().concat(runEmailTests()).concat(runAddressTests());
         const list = document.getElementById("results");
         const failed = results.filter(function (item) {
           return !item.pass;

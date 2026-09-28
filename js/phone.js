@@ -32,7 +32,9 @@ function detectPhoneNumbers(text) {
 }
 
 function isMaskableToken(token) {
-  return Boolean(token && (token.type === "phone" || token.type === "email"));
+  return Boolean(
+    token && (token.type === "phone" || token.type === "email" || token.type === "address")
+  );
 }
 
 function collectPhoneMatches(text) {
@@ -60,6 +62,25 @@ function collectEmailMatches(text) {
   while ((match = regex.exec(text)) !== null) {
     if (isPlausibleEmail(match[0])) {
       matches.push({ type: "email", value: match[0], index: match.index });
+    }
+  }
+
+  return matches;
+}
+
+// 住所検出は address.js。未読み込みでも電話・メールの tokenize は動かす。
+function collectAddressMatches(text) {
+  if (typeof createAddressRegex !== "function" || typeof isPlausibleAddress !== "function") {
+    return [];
+  }
+
+  const matches = [];
+  const regex = createAddressRegex();
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (isPlausibleAddress(match[0])) {
+      matches.push({ type: "address", value: match[0], index: match.index });
     }
   }
 
@@ -100,9 +121,9 @@ function mergeMaskableMatches(matches) {
 }
 
 /**
- * 入力文字列を通常テキストと、電話番号・メールに分割する。
- * 既存の tokenize → render → copy の流れは変えず、メールを同じトークン列に載せる。
- * @returns {{ type: "text" | "phone" | "email", value: string, disabled?: boolean }[]}
+ * 入力文字列を通常テキストと、電話番号・メール・住所に分割する。
+ * 既存の tokenize → render → copy の流れは変えず、住所も同じトークン列に載せる。
+ * @returns {{ type: "text" | "phone" | "email" | "address", value: string, disabled?: boolean }[]}
  */
 function tokenizeText(text) {
   if (typeof text !== "string" || text.length === 0) {
@@ -110,7 +131,9 @@ function tokenizeText(text) {
   }
 
   const matches = mergeMaskableMatches(
-    collectPhoneMatches(text).concat(collectEmailMatches(text))
+    collectPhoneMatches(text)
+      .concat(collectEmailMatches(text))
+      .concat(collectAddressMatches(text))
   );
   const tokens = [];
   let lastIndex = 0;
