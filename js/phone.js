@@ -33,7 +33,11 @@ function detectPhoneNumbers(text) {
 
 function isMaskableToken(token) {
   return Boolean(
-    token && (token.type === "phone" || token.type === "email" || token.type === "address")
+    token &&
+      (token.type === "phone" ||
+        token.type === "email" ||
+        token.type === "address" ||
+        token.type === "company")
   );
 }
 
@@ -87,6 +91,28 @@ function collectAddressMatches(text) {
   return matches;
 }
 
+// 企業名検出は company.js。未読み込みでも電話・メール・住所の tokenize は動かす。
+function collectCompanyMatches(text) {
+  if (
+    typeof createCompanyRegex !== "function" ||
+    typeof isPlausibleCompanyName !== "function"
+  ) {
+    return [];
+  }
+
+  const matches = [];
+  const regex = createCompanyRegex();
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (isPlausibleCompanyName(match[0])) {
+      matches.push({ type: "company", value: match[0], index: match.index });
+    }
+  }
+
+  return matches;
+}
+
 // 重なるときは開始位置が早い方、同じ位置なら長い方、さらにメールを優先する。
 function mergeMaskableMatches(matches) {
   const sorted = matches.slice().sort(function (a, b) {
@@ -121,9 +147,9 @@ function mergeMaskableMatches(matches) {
 }
 
 /**
- * 入力文字列を通常テキストと、電話番号・メール・住所に分割する。
- * 既存の tokenize → render → copy の流れは変えず、住所も同じトークン列に載せる。
- * @returns {{ type: "text" | "phone" | "email" | "address", value: string, disabled?: boolean }[]}
+ * 入力文字列を通常テキストと、電話番号・メール・住所・企業名に分割する。
+ * 既存の tokenize → render → copy の流れは変えず、企業名も同じトークン列に載せる。
+ * @returns {{ type: "text" | "phone" | "email" | "address" | "company", value: string, disabled?: boolean }[]}
  */
 function tokenizeText(text) {
   if (typeof text !== "string" || text.length === 0) {
@@ -134,6 +160,7 @@ function tokenizeText(text) {
     collectPhoneMatches(text)
       .concat(collectEmailMatches(text))
       .concat(collectAddressMatches(text))
+      .concat(collectCompanyMatches(text))
   );
   const tokens = [];
   let lastIndex = 0;

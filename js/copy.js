@@ -15,7 +15,7 @@ function buildMaskedText(tokens) {
     if (!token || typeof token.value !== "string") {
       continue;
     }
-    // メール・住所も電話番号と同じルール: ON なら [MASK]、OFF なら元の文字列。
+    // メール・住所・企業名も電話番号と同じルール: ON なら [MASK]、OFF なら元の文字列。
     if (isMaskableToken(token) && !token.disabled) {
       result += MASK_REPLACEMENT;
     } else {
@@ -42,7 +42,10 @@ function tokensFromOutputElement(container) {
       tokens.push({
         // highlight の data-type を優先。未知の値は従来どおり phone に倒す。
         type:
-          dataType === "email" || dataType === "address" || dataType === "phone"
+          dataType === "email" ||
+          dataType === "address" ||
+          dataType === "company" ||
+          dataType === "phone"
             ? dataType
             : "phone",
         value: node.textContent,
