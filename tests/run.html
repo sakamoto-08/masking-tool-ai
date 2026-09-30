@@ -29,6 +29,7 @@
     <script src="../js/email.js"></script>
     <script src="../js/address.js"></script>
     <script src="../js/company.js"></script>
+    <script src="../js/person.js"></script>
     <script src="../js/phone.js"></script>
     <script src="../js/copy.js"></script>
     <script src="../js/render.js"></script>
@@ -36,12 +37,14 @@
     <script src="email.test.js"></script>
     <script src="address.test.js"></script>
     <script src="company.test.js"></script>
+    <script src="person.test.js"></script>
     <script>
       (function () {
         const results = runPhoneTests()
           .concat(runEmailTests())
           .concat(runAddressTests())
-          .concat(runCompanyTests());
+          .concat(runCompanyTests())
+          .concat(runPersonTests());
         const list = document.getElementById("results");
         const failed = results.filter(function (item) {
           return !item.pass;

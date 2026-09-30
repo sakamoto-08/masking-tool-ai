@@ -12,7 +12,7 @@ function renderHighlighted(text, container) {
   const fragment = document.createDocumentFragment();
 
   for (const token of tokens) {
-    // 電話番号と同じ highlight でメール・住所・企業名も描画する。data-type はコピー時の復元用。
+    // 電話番号と同じ highlight でメール・住所・企業名・個人名も描画する。data-type はコピー時の復元用。
     if (isMaskableToken(token)) {
       const span = document.createElement("span");
       span.className = "highlight";
