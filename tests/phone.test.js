@@ -118,21 +118,21 @@ function runPhoneTests() {
   });
 
   assertEqual(
-    "ハイフンなしONの番号は [MASK] に置換する",
+    "ハイフンなしONの番号は [電話番号] に置換する",
     buildMaskedText([
       { type: "text", value: "番号:" },
       { type: "phone", value: "09012345678", disabled: false },
     ]),
-    "番号: [MASK] "
+    "番号: [電話番号] "
   );
 
   assertEqual(
-    "ONの番号は [MASK] に置換する",
+    "ONの番号は [電話番号] に置換する",
     buildMaskedText([
       { type: "text", value: "番号:" },
       { type: "phone", value: "03-1234-5678", disabled: false },
     ]),
-    "番号: [MASK] "
+    "番号: [電話番号] "
   );
 
   assertEqual(
@@ -167,11 +167,11 @@ function runPhoneTests() {
 
     const copied = buildMaskedText(tokensFromOutputElement(mount));
     assertTrue("OFF時のコピーは元番号を含む", copied.indexOf("03-1234-5678") !== -1);
-    assertTrue("OFF時のコピーはMASKしない", copied.indexOf("[MASK]") === -1);
+    assertTrue("OFF時のコピーはMASKしない", copied.indexOf("[電話番号]") === -1);
 
     toggleHighlightTarget(phoneSpan);
     const masked = buildMaskedText(tokensFromOutputElement(mount));
-    assertTrue("ON時のコピーはMASKする", masked.indexOf(" [MASK] ") !== -1);
+    assertTrue("ON時のコピーはMASKする", masked.indexOf(" [電話番号] ") !== -1);
 
     // 強化: ハイフンなし番号もハイライトされ、コピーでマスクできる
     const plainMount = document.createElement("div");
@@ -183,7 +183,7 @@ function runPhoneTests() {
       plainSpan !== null && plainSpan.textContent === "09012345678"
     );
     const plainMasked = buildMaskedText(tokensFromOutputElement(plainMount));
-    assertTrue("ハイフンなしON時のコピーはMASKする", plainMasked.indexOf(" [MASK] ") !== -1);
+    assertTrue("ハイフンなしON時のコピーはMASKする", plainMasked.indexOf(" [電話番号] ") !== -1);
   }
 
   return results;

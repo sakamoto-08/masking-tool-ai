@@ -103,12 +103,12 @@ function runEmailTests() {
   });
 
   assertEqual(
-    "メールONは [MASK] に置換する",
+    "メールONは [メール] に置換する",
     buildMaskedText([
       { type: "text", value: "連絡先:" },
       { type: "email", value: "test@example.com", disabled: false },
     ]),
-    "連絡先: [MASK] "
+    "連絡先: [メール] "
   );
 
   assertEqual(
@@ -135,12 +135,12 @@ function runEmailTests() {
     );
 
     const masked = buildMaskedText(tokensFromOutputElement(mount));
-    assertTrue("メールON時のコピーはMASKする", masked.indexOf(" [MASK] ") !== -1);
+    assertTrue("メールON時のコピーはMASKする", masked.indexOf(" [メール] ") !== -1);
 
     toggleHighlightTarget(emailSpan);
     const copied = buildMaskedText(tokensFromOutputElement(mount));
     assertTrue("メールOFF時のコピーは元文字列を含む", copied.indexOf("test@example.com") !== -1);
-    assertTrue("メールOFF時のコピーはMASKしない", copied.indexOf("[MASK]") === -1);
+    assertTrue("メールOFF時のコピーはMASKしない", copied.indexOf("[メール]") === -1);
   }
 
   return results;

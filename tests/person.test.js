@@ -160,12 +160,12 @@ function runPersonTests() {
   });
 
   assertEqual(
-    "個人名ONは [MASK] に置換する",
+    "個人名ONは [氏名] に置換する",
     buildMaskedText([
       { type: "text", value: "担当:" },
       { type: "person", value: "山田太郎", disabled: false },
     ]),
-    "担当: [MASK] "
+    "担当: [氏名] "
   );
 
   assertEqual(
@@ -192,13 +192,22 @@ function runPersonTests() {
     );
 
     const masked = buildMaskedText(tokensFromOutputElement(mount));
-    assertTrue("個人名ON時のコピーはMASKする", masked.indexOf(" [MASK] ") !== -1);
+    assertTrue("個人名ON時のコピーはMASKする", masked.indexOf(" [氏名] ") !== -1);
 
     toggleHighlightTarget(personSpan);
     const copied = buildMaskedText(tokensFromOutputElement(mount));
     assertTrue("個人名OFF時のコピーは元文字列を含む", copied.indexOf("山田太郎") !== -1);
-    assertTrue("個人名OFF時のコピーはMASKしない", copied.indexOf("[MASK]") === -1);
+    assertTrue("個人名OFF時のコピーはMASKしない", copied.indexOf("[氏名]") === -1);
   }
+
+  const mixedAll = tokenizeText(
+    "山田太郎と test@example.com と 03-1234-5678 と 東京都渋谷区道玄坂1-2-3 と 株式会社サンプル商事"
+  );
+  assertEqual(
+    "混在文のコピーは種別ラベルになる",
+    buildMaskedText(mixedAll),
+    " [氏名] と  [メール]  と  [電話番号]  と  [住所]  と  [企業名] "
+  );
 
   return results;
 }

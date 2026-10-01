@@ -1,9 +1,22 @@
 /**
  * コピー用テキストの組み立て。
- * ON（マスク対象）は現行どおり前後スペース付きの " [MASK] " に置換する。
+ * ON の対象は種別ごとのラベルに置換する（前後スペース付き）。
+ * 例: [氏名] / [メール] / [電話番号] / [住所] / [企業名]
+ * OFF なら元の文字列を残す。
  */
 
-const MASK_REPLACEMENT = " [MASK] ";
+const MASK_LABELS = {
+  person: "氏名",
+  email: "メール",
+  phone: "電話番号",
+  address: "住所",
+  company: "企業名",
+};
+
+function maskReplacementFor(type) {
+  const label = MASK_LABELS[type] || "MASK";
+  return " [" + label + "] ";
+}
 
 function buildMaskedText(tokens) {
   if (!Array.isArray(tokens)) {
@@ -15,9 +28,9 @@ function buildMaskedText(tokens) {
     if (!token || typeof token.value !== "string") {
       continue;
     }
-    // メール・住所・企業名・個人名も電話番号と同じルール: ON なら [MASK]、OFF なら元の文字列。
+    // ON なら種別ラベル、OFF なら元の文字列。
     if (isMaskableToken(token) && !token.disabled) {
-      result += MASK_REPLACEMENT;
+      result += maskReplacementFor(token.type);
     } else {
       result += token.value;
     }

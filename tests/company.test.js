@@ -130,12 +130,12 @@ function runCompanyTests() {
   });
 
   assertEqual(
-    "企業名ONは [MASK] に置換する",
+    "企業名ONは [企業名] に置換する",
     buildMaskedText([
       { type: "text", value: "会社:" },
       { type: "company", value: "株式会社サンプル商事", disabled: false },
     ]),
-    "会社: [MASK] "
+    "会社: [企業名] "
   );
 
   assertEqual(
@@ -162,7 +162,7 @@ function runCompanyTests() {
     );
 
     const masked = buildMaskedText(tokensFromOutputElement(mount));
-    assertTrue("企業名ON時のコピーはMASKする", masked.indexOf(" [MASK] ") !== -1);
+    assertTrue("企業名ON時のコピーはMASKする", masked.indexOf(" [企業名] ") !== -1);
 
     toggleHighlightTarget(companySpan);
     const copied = buildMaskedText(tokensFromOutputElement(mount));
@@ -170,7 +170,7 @@ function runCompanyTests() {
       "企業名OFF時のコピーは元文字列を含む",
       copied.indexOf("株式会社サンプル商事") !== -1
     );
-    assertTrue("企業名OFF時のコピーはMASKしない", copied.indexOf("[MASK]") === -1);
+    assertTrue("企業名OFF時のコピーはMASKしない", copied.indexOf("[企業名]") === -1);
   }
 
   return results;

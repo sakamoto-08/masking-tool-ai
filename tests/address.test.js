@@ -119,12 +119,12 @@ function runAddressTests() {
   });
 
   assertEqual(
-    "住所ONは [MASK] に置換する",
+    "住所ONは [住所] に置換する",
     buildMaskedText([
       { type: "text", value: "住所:" },
       { type: "address", value: "東京都渋谷区道玄坂1-2-3", disabled: false },
     ]),
-    "住所: [MASK] "
+    "住所: [住所] "
   );
 
   assertEqual(
@@ -151,12 +151,12 @@ function runAddressTests() {
     );
 
     const masked = buildMaskedText(tokensFromOutputElement(mount));
-    assertTrue("住所ON時のコピーはMASKする", masked.indexOf(" [MASK] ") !== -1);
+    assertTrue("住所ON時のコピーはMASKする", masked.indexOf(" [住所] ") !== -1);
 
     toggleHighlightTarget(addressSpan);
     const copied = buildMaskedText(tokensFromOutputElement(mount));
     assertTrue("住所OFF時のコピーは元文字列を含む", copied.indexOf("東京都渋谷区道玄坂1-2-3") !== -1);
-    assertTrue("住所OFF時のコピーはMASKしない", copied.indexOf("[MASK]") === -1);
+    assertTrue("住所OFF時のコピーはMASKしない", copied.indexOf("[住所]") === -1);
   }
 
   return results;
